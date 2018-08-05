@@ -1,0 +1,50 @@
+In ~/Dokumente/isles18/gctest$
+
+LOCAL TEST:
+
+gcloud ml-engine local train \
+--module-name="trainer.task" \
+--package-path="trainer/" \
+-- \
+--i="/home/lasse/Dokumente/isles18/TRAINING" \
+--o="/home/lasse/Dokumente/isles18/gctest/output"
+
+
+SUBMIT JOB:
+
+gcloud ml-engine jobs submit training try \
+--package-path="trainer/" \
+--module-name="trainer.task" \
+--job-dir="gs://isles18/jobdir" \
+--config="config.yaml" \
+--region="europe-west1" \
+--runtime-version=1.8 \
+-- \
+--i="gs://isles18/TRAINING" \
+--o="gs://isles18/output"
+
+
+
+
+gcloud ml-engine jobs stream-logs x2 --polling-interval=15
+
+
+gcloud ml-engine jobs stream-logs x5
+gcloud ml-engine jobs cancel x4
+
+
+
+PACKAGE_PATH="gctest/"
+
+--job-dir  \
+--runtime-version 1.8 \
+JOB_DIR=gs://isles18/output/
+
+
+
+PROJECT_ID=peak-service-211017 
+BUCKET=gs://isles18
+OUTPUT_PATH=$BUCKET/output/
+
+output pfad:
+gs://isles18/output/
